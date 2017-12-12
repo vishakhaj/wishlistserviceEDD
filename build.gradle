@@ -1,0 +1,48 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.3.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+dependencyManagement {
+    imports { 
+        mavenBom "org.springframework.cloud:spring-cloud-consul-dependencies:1.2.1.RELEASE" 
+    }
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	compile("org.springframework.boot:spring-boot-starter-actuator")
+	compile("org.springframework.boot:spring-boot-starter-hateoas")
+	compile('org.springframework.cloud:spring-cloud-starter-consul-discovery')
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0")
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile group: 'org.axonframework', name: 'axon-spring-boot-starter', version: '3.0.4'
+	compile("org.axonframework:axon-mongo:3.0.4")
+	compile ('com.google.guava:guava:21.0')
+   
+	compile group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.2.10.Final'
+	runtime('org.hsqldb:hsqldb')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
